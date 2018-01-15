@@ -14,6 +14,8 @@
 		0C66EC4D200C2B43006ED146 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C66EC4B200C2B43006ED146 /* LaunchScreen.storyboard */; };
 		0C66EC58200C2B43006ED146 /* PagePlanerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C66EC57200C2B43006ED146 /* PagePlanerTests.swift */; };
 		0C66EC63200C2B43006ED146 /* PagePlanerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C66EC62200C2B43006ED146 /* PagePlanerUITests.swift */; };
+		0CC7D351200C321B00184299 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC7D350200C321B00184299 /* TimerViewController.swift */; };
+		0CC7D353200C79A700184299 /* ReadingDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC7D352200C79A700184299 /* ReadingDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		0C66EC5E200C2B43006ED146 /* PagePlanerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PagePlanerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C66EC62200C2B43006ED146 /* PagePlanerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagePlanerUITests.swift; sourceTree = "<group>"; };
 		0C66EC64200C2B43006ED146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0CC7D350200C321B00184299 /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
+		0CC7D352200C79A700184299 /* ReadingDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,8 @@
 			children = (
 				0C66EC42200C2B43006ED146 /* AppDelegate.swift */,
 				0C66EC44200C2B43006ED146 /* ViewController.swift */,
+				0CC7D352200C79A700184299 /* ReadingDetailsViewController.swift */,
+				0CC7D350200C321B00184299 /* TimerViewController.swift */,
 				0C66EC46200C2B43006ED146 /* Main.storyboard */,
 				0C66EC49200C2B43006ED146 /* Assets.xcassets */,
 				0C66EC4B200C2B43006ED146 /* LaunchScreen.storyboard */,
@@ -259,7 +265,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CC7D353200C79A700184299 /* ReadingDetailsViewController.swift in Sources */,
 				0C66EC45200C2B43006ED146 /* ViewController.swift in Sources */,
+				0CC7D351200C321B00184299 /* TimerViewController.swift in Sources */,
 				0C66EC43200C2B43006ED146 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,6 +435,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K895A74Y7P;
 				INFOPLIST_FILE = PagePlaner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Royalty.PagePlaner;
@@ -441,6 +450,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K895A74Y7P;
 				INFOPLIST_FILE = PagePlaner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Royalty.PagePlaner;
