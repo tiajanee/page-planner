@@ -7,8 +7,11 @@
 //
 
 import UIKit
-
-
+extension String {
+    func removingWhitespaces() -> String {
+        return components(separatedBy: .whitespaces).joined()
+    }
+}
 class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView.tag == 1 {
@@ -16,6 +19,13 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         }
         
         return 0
+    }
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 20.0
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        return 30.0
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -70,12 +80,14 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
             UIBarButtonItem(title: "done", style: UIBarButtonItemStyle.done, target: textField, action: #selector(UITextField.resignFirstResponder)),
             UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         ]
-        
+        numOfPagesTextField.keyboardType = UIKeyboardType.numberPad
         numKeypadToolbar.sizeToFit()
         numKeypadToolbar.tintColor = UIColor.gray
         numKeypadToolbar.isTranslucent = true
         // add a toolbar with a done button above the number pad
-        numOfPagesTextField.inputAccessoryView = numKeypadToolbar
+        
+        //proper num keyboard pops up, but still have to implement
+        //checks to ensure user cannot type non numerical numbers
     }
     
     @IBOutlet weak var numOfPagesTextField: UITextField!
@@ -86,6 +98,7 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         createDatePicker()
+        
         
         
         //customizing UILabels
@@ -106,7 +119,11 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         hoursGoalPicker.dataSource = self
         hoursGoalPicker.delegate = self
         
-       
+        let hoursGoalPickerColor = UIColor(red: 74.5/255.0 , green: 88.5/255.0, blue: 210.5/255.0, alpha: 0.5)
+        hoursGoalPicker.backgroundColor = UIColor.clear
+        //hoursGoalPicker.layer.borderColor = UIColor.black as! CGColor
+        hoursGoalPicker.layer.borderWidth = 0.5
+        
         
         
         //calling dismissing done buttons on keyboard functions
@@ -169,10 +186,46 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         formatter.allowedUnits = [.month, .day]
         formatter.maximumUnitCount = 2   // often, you don't care about seconds if the elapsed time is in months, so you'll set max unit to whatever is appropriate in your case
         
-        let string = formatter.string(from: startDate, to: endDate)
-        print(string)
-    }
-    
+        /*
+         Formatting the dateDifference calculated String to include only the month and day
+         numerical difference. Saves those to integers to different variables for
+         easier future calculations.
+         */
+//        if let string = formatter.string(from: startDate, to: endDate) {
+//            let intString = string.components(
+//                separatedBy: NSCharacterSet
+//                    .decimalDigits
+//                    .inverted)
+//                .joined(separator: " ")
+//
+//            let trimmedString = intString.removingWhitespaces()
+//            print(trimmedString)
+//
+//            let startindex = trimmedString.characters.index(trimmedString.startIndex, offsetBy: 0)
+//            let monthAmount = trimmedString[startindex]
+//            print(monthAmount)
+//
+//            let endindex = trimmedString.characters.index(trimmedString.startIndex, offsetBy: 1)
+//            let editedDayAmount = trimmedString[endindex]
+//            let dayAmount = Int(String(editedDayAmount))!
+//
+//            let monthToDays = (Int(String(monthAmount)))!*30
+//            print(monthToDays)
+//
+//            let totalDayAmount = monthToDays + dayAmount
+//            print(totalDayAmount)
+//
+//            let readingTime = Double(timeElapsed)! * Double(numOfPagesTextField.text!)!
+//            let perDay = (readingTime/Double(totalDayAmount))
+//            print(perDay)
+//
+//            } else {
+//                print("error")
+//        }
+//
+//
+   }
+//
     
 }
 
