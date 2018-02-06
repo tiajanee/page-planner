@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C18E41B2028E87F00F9C6CE /* LibreBarcode39Text-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C18E41A2028E87F00F9C6CE /* LibreBarcode39Text-Regular.ttf */; };
 		0C66EC43200C2B43006ED146 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C66EC42200C2B43006ED146 /* AppDelegate.swift */; };
-		0C66EC45200C2B43006ED146 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C66EC44200C2B43006ED146 /* ViewController.swift */; };
+		0C66EC45200C2B43006ED146 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C66EC44200C2B43006ED146 /* LandingViewController.swift */; };
 		0C66EC48200C2B43006ED146 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C66EC46200C2B43006ED146 /* Main.storyboard */; };
 		0C66EC4A200C2B43006ED146 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C66EC49200C2B43006ED146 /* Assets.xcassets */; };
 		0C66EC4D200C2B43006ED146 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C66EC4B200C2B43006ED146 /* LaunchScreen.storyboard */; };
@@ -36,9 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C18E41A2028E87F00F9C6CE /* LibreBarcode39Text-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LibreBarcode39Text-Regular.ttf"; sourceTree = "<group>"; };
 		0C66EC3F200C2B43006ED146 /* PagePlaner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PagePlaner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C66EC42200C2B43006ED146 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0C66EC44200C2B43006ED146 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0C66EC44200C2B43006ED146 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		0C66EC47200C2B43006ED146 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0C66EC49200C2B43006ED146 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C66EC4C200C2B43006ED146 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -78,6 +80,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C18E41C2028E8A500F9C6CE /* Custom Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0C18E41A2028E87F00F9C6CE /* LibreBarcode39Text-Regular.ttf */,
+			);
+			path = "Custom Fonts";
+			sourceTree = "<group>";
+		};
 		0C66EC36200C2B43006ED146 = {
 			isa = PBXGroup;
 			children = (
@@ -101,8 +111,9 @@
 		0C66EC41200C2B43006ED146 /* PagePlaner */ = {
 			isa = PBXGroup;
 			children = (
+				0C18E41C2028E8A500F9C6CE /* Custom Fonts */,
 				0C66EC42200C2B43006ED146 /* AppDelegate.swift */,
-				0C66EC44200C2B43006ED146 /* ViewController.swift */,
+				0C66EC44200C2B43006ED146 /* LandingViewController.swift */,
 				0CC7D352200C79A700184299 /* ReadingDetailsViewController.swift */,
 				0CC7D350200C321B00184299 /* TimerViewController.swift */,
 				0C66EC46200C2B43006ED146 /* Main.storyboard */,
@@ -238,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C18E41B2028E87F00F9C6CE /* LibreBarcode39Text-Regular.ttf in Resources */,
 				0C66EC4D200C2B43006ED146 /* LaunchScreen.storyboard in Resources */,
 				0C66EC4A200C2B43006ED146 /* Assets.xcassets in Resources */,
 				0C66EC48200C2B43006ED146 /* Main.storyboard in Resources */,
@@ -266,7 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CC7D353200C79A700184299 /* ReadingDetailsViewController.swift in Sources */,
-				0C66EC45200C2B43006ED146 /* ViewController.swift in Sources */,
+				0C66EC45200C2B43006ED146 /* LandingViewController.swift in Sources */,
 				0CC7D351200C321B00184299 /* TimerViewController.swift in Sources */,
 				0C66EC43200C2B43006ED146 /* AppDelegate.swift in Sources */,
 			);
