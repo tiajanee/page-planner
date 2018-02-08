@@ -12,7 +12,13 @@ public var timeElapsed = ""
 class TimerViewController: UIViewController {
     
     @IBOutlet weak var timerLabel: UILabel!
-    
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var startBackground: UIImageView!
+    @IBOutlet weak var endButton: UIButton!
+    @IBOutlet weak var resetBackground: UIImageView!
+    @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var endBackground: UIImageView!
+    @IBOutlet weak var logoLabel: UITextView!
     //initial time starts at 0
     var time = 0.00
     //timer
@@ -41,6 +47,29 @@ class TimerViewController: UIViewController {
         timerLabel.text = String(format: "%3.2f", time)
     }
     override func viewDidLoad() {
+        logoLabel.font = UIFont(name:"LibreBarcode39Text-Regular", size: 70.0)
+        logoLabel.layer.opacity = 0.35
+        endButton.layer.shadowColor = UIColor.black.cgColor
+        endButton.layer.shadowOffset = CGSize(width: 0.1, height: 0.1)
+        endButton.layer.shadowOpacity = 0.50
+        startButton.layer.shadowColor = UIColor.black.cgColor
+        startButton.layer.shadowOffset = CGSize(width: 0.1, height: 0.1)
+        startButton.layer.shadowOpacity = 0.50
+        resetButton.layer.shadowColor = UIColor.black.cgColor
+        resetButton.layer.shadowOffset = CGSize(width: 0.1, height: 0.1)
+        resetButton.layer.shadowOpacity = 0.50
+        resetBackground.layer.borderWidth = 0.50
+        resetBackground.layer.borderColor = UIColor.gray.cgColor
+        endBackground.layer.borderColor = UIColor.gray.cgColor
+        endBackground.layer.borderWidth = 0.50
+        startBackground.layer.borderColor = UIColor.gray.cgColor
+        startBackground.layer.borderWidth = 0.50
+        
+        timerLabel.layer.shadowOpacity = 1
+        timerLabel.layer.shadowColor = UIColor.gray.cgColor
+        timerLabel.layer.shadowOffset = CGSize(width: 1, height: 1)
+        
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
