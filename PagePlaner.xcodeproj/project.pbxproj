@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C10AEE2202C3AF40064CBED /* LibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C10AEE1202C3AF40064CBED /* LibraryTableViewController.swift */; };
+		0C10AEE8202C41D80064CBED /* ReadingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C10AEE7202C41D80064CBED /* ReadingsTableViewCell.swift */; };
 		0C18E41B2028E87F00F9C6CE /* LibreBarcode39Text-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C18E41A2028E87F00F9C6CE /* LibreBarcode39Text-Regular.ttf */; };
 		0C66EC43200C2B43006ED146 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C66EC42200C2B43006ED146 /* AppDelegate.swift */; };
 		0C66EC45200C2B43006ED146 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C66EC44200C2B43006ED146 /* LandingViewController.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C10AEE1202C3AF40064CBED /* LibraryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewController.swift; sourceTree = "<group>"; };
+		0C10AEE7202C41D80064CBED /* ReadingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingsTableViewCell.swift; sourceTree = "<group>"; };
 		0C18E41A2028E87F00F9C6CE /* LibreBarcode39Text-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LibreBarcode39Text-Regular.ttf"; sourceTree = "<group>"; };
 		0C66EC3F200C2B43006ED146 /* PagePlaner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PagePlaner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C66EC42200C2B43006ED146 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 			children = (
 				0C18E41C2028E8A500F9C6CE /* Custom Fonts */,
 				0C66EC42200C2B43006ED146 /* AppDelegate.swift */,
+				0C10AEE7202C41D80064CBED /* ReadingsTableViewCell.swift */,
+				0C10AEE1202C3AF40064CBED /* LibraryTableViewController.swift */,
 				0C66EC44200C2B43006ED146 /* LandingViewController.swift */,
 				0CC7D352200C79A700184299 /* ReadingDetailsViewController.swift */,
 				0CC7D350200C321B00184299 /* TimerViewController.swift */,
@@ -279,8 +285,10 @@
 			files = (
 				0CC7D353200C79A700184299 /* ReadingDetailsViewController.swift in Sources */,
 				0C66EC45200C2B43006ED146 /* LandingViewController.swift in Sources */,
+				0C10AEE8202C41D80064CBED /* ReadingsTableViewCell.swift in Sources */,
 				0CC7D351200C321B00184299 /* TimerViewController.swift in Sources */,
 				0C66EC43200C2B43006ED146 /* AppDelegate.swift in Sources */,
+				0C10AEE2202C3AF40064CBED /* LibraryTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
