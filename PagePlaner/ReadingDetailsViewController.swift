@@ -44,7 +44,7 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         
         return nil
     }
-    
+   
    
     @IBOutlet weak var backgroundImg: UIImageView!
     @IBOutlet weak var hoursLabel: UILabel!
@@ -104,6 +104,14 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         createDatePicker()
+        hoursGoalPicker.backgroundColor = UIColor.black
+        hoursGoalPicker.layer.borderWidth = 0.35
+        hoursGoalPicker.layer.borderColor = UIColor.white.cgColor
+        
+        
+        self.navigationItem.title = "PLAN"
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "LibreBarcode39Text-Regular", size: 40)!]
+
         dateBackground.layer.borderWidth = 0.35
         dateBackground.layer.borderColor = UIColor.gray.cgColor
         

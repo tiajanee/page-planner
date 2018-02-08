@@ -47,6 +47,8 @@ class TimerViewController: UIViewController {
         timerLabel.text = String(format: "%3.2f", time)
     }
     override func viewDidLoad() {
+        self.navigationItem.title = "TIMER"
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "LibreBarcode39Text-Regular", size: 40)!]
         logoLabel.font = UIFont(name:"LibreBarcode39Text-Regular", size: 70.0)
         logoLabel.layer.opacity = 0.35
         endButton.layer.shadowColor = UIColor.black.cgColor
