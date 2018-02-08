@@ -19,7 +19,7 @@ class LandingViewController: UIViewController {
     override func viewDidLoad() {
         //specifying custom font
         landingText.font = UIFont(name:"LibreBarcode39Text-Regular", size: 70.0)
-        landingText.layer.opacity = 0.30
+        landingText.layer.opacity = 0.35
         
         //Adding shadows to text, cleaner look
         welcomeText.layer.shadowColor = UIColor.black.cgColor
