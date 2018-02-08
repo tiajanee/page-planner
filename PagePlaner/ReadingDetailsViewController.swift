@@ -38,15 +38,21 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
             if pickerView.tag == 1 {
                 return hoursGoalPickerData[row]
+                hoursGoalPicker.subviews[0].subviews[1].isHidden = true
+                hoursGoalPicker.subviews[0].subviews[2].isHidden = true
         }
         
         return nil
     }
+    
    
     @IBOutlet weak var backgroundImg: UIImageView!
     @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var orLabel: UILabel!
-  
+    @IBOutlet weak var dateBackground: UIImageView!
+    @IBOutlet weak var hoursBackground: UIImageView!
+
+    @IBOutlet weak var saveDetailsButton: UIButton!
     @IBOutlet weak var datePickerText: UITextField!
     @IBOutlet weak var hoursGoalPicker: UIPickerView!
     
@@ -98,23 +104,21 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         createDatePicker()
+        dateBackground.layer.borderWidth = 0.35
+        dateBackground.layer.borderColor = UIColor.gray.cgColor
         
+        hoursBackground.layer.borderWidth = 0.35
+        hoursBackground.layer.borderColor = UIColor.gray.cgColor
+        //does not allow users to choose goal dates that have already passed
+        datePicker.minimumDate = Date()
+        
+        
+
         
         
         //customizing UILabels
         let newColor = UIColor.black.cgColor
-        dateLabel.layer.backgroundColor = newColor
-        dateLabel.layer.opacity = 0.40
-        dateLabel.layer.borderColor = newColor
-        dateLabel.layer.borderWidth = 1
-        dateLabel.layer.cornerRadius = (dateLabel.bounds.width)/50
-        
-        hoursLabel.layer.backgroundColor = newColor
-        hoursLabel.layer.opacity = 0.40
-        hoursLabel.layer.borderColor = newColor
-        hoursLabel.layer.borderWidth = 1
-        hoursLabel.layer.cornerRadius = (hoursLabel.bounds.width)/50
-        
+//       
         //adding data from array to UIPickers
         hoursGoalPicker.dataSource = self
         hoursGoalPicker.delegate = self
@@ -126,9 +130,9 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         
         
         
-        //calling dismissing done buttons on keyboard functions
-        addDoneButtonOnNumpad(textField: numOfPagesTextField)
+        //calling done buttons on keyboard functions
         addDoneButtononKeyboard(textField: titleTextField)
+        addDoneButtonOnNumpad(textField: numOfPagesTextField)
         
         //setting the format to display current date
         var currentDate = String(describing: Date())
@@ -140,22 +144,13 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         currentDateTextField.text = currentDate
         //let selectedDate = dateFormatter.string(from: goalDatePicker.date)
         //print(selectedDate)
-        
-        
-        
-        
-        
-        
-        // Do any additional setup after loading the view, typically from a nib.
 
-        
     }
     
     func createDatePicker() {
         
         datePicker.datePickerMode = .date
         self.datePicker.minimumDate = Date()
-        //self.datePicker.maximumDate = DateInterval(start: Date(), dur)
        
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -165,6 +160,7 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         toolbar.tintColor = UIColor.gray
         toolbar.isTranslucent = true
         datePickerText.inputAccessoryView = toolbar
+
         datePickerText.inputView = datePicker
     }
     
