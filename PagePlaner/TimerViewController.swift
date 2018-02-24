@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 public var timeElapsed = ""
 
 class TimerViewController: UIViewController {
@@ -23,7 +24,6 @@ class TimerViewController: UIViewController {
     var time = 0.00
     //timer
     var timer = Timer()
-    
     @IBAction func resetButton(_ sender: Any) {
         //stops timer and resets it back to 0
         timer.invalidate()
@@ -35,7 +35,6 @@ class TimerViewController: UIViewController {
         //stops timer
         timer.invalidate()
         timeElapsed = (timerLabel.text)!
-        
     }
     @IBAction func startTimer(_ sender: Any) {
         //timer with milliseconds
@@ -73,6 +72,7 @@ class TimerViewController: UIViewController {
         
         
         super.viewDidLoad()
+
         // Do any additional setup after loading the view, typically from a nib.
     }
     
