@@ -10,11 +10,9 @@ import UIKit
 
 class LandingViewController: UIViewController {
 
-    @IBOutlet weak var toTimerButton: UIButton!
     @IBOutlet weak var toLibraryButton: UIButton!
     @IBOutlet weak var landingText: UITextView!
     @IBOutlet weak var libBackground: UIImageView!
-    @IBOutlet weak var readBackground: UIImageView!
     @IBOutlet weak var welcomeText: UITextView!
     override func viewDidLoad() {
         //specifying custom font
@@ -40,17 +38,13 @@ class LandingViewController: UIViewController {
         libBackground.layer.borderColor = UIColor.black.cgColor
         libBackground.layer.opacity = 0.70
         
-        readBackground.layer.borderWidth = 0.80
-        readBackground.layer.borderColor = UIColor.black.cgColor
-        readBackground.layer.opacity = 0.70
+       
         
         libBackground.layer.shadowColor = UIColor.black.cgColor
         libBackground.layer.shadowOffset = CGSize(width: 3.0, height: 2.0)
         libBackground.layer.shadowOpacity = 0.60
         
-        readBackground.layer.shadowColor = UIColor.black.cgColor
-        readBackground.layer.shadowOffset = CGSize(width: 3.0, height: 2.0)
-        readBackground.layer.shadowOpacity = 0.60
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
