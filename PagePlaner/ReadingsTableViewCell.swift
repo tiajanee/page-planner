@@ -14,6 +14,9 @@ class ReadingsTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var paceLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var calcName: UILabel!
+    @IBOutlet weak var calcPace: UILabel!
+    @IBOutlet weak var calcDate: UILabel!
     override func awakeFromNib() {
         
         super.awakeFromNib()
