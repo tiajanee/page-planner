@@ -19,6 +19,7 @@
 		0C66EC63200C2B43006ED146 /* PagePlanerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C66EC62200C2B43006ED146 /* PagePlanerUITests.swift */; };
 		0CC7D351200C321B00184299 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC7D350200C321B00184299 /* TimerViewController.swift */; };
 		0CC7D353200C79A700184299 /* ReadingDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC7D352200C79A700184299 /* ReadingDetailsViewController.swift */; };
+		0CF1AA5D203E8901005507B2 /* ReadingModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1AA5B203E8901005507B2 /* ReadingModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		0C66EC64200C2B43006ED146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CC7D350200C321B00184299 /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		0CC7D352200C79A700184299 /* ReadingDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingDetailsViewController.swift; sourceTree = "<group>"; };
+		0CF1AA5C203E8901005507B2 /* ReadingModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReadingModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				0C10AEE1202C3AF40064CBED /* LibraryTableViewController.swift */,
 				0C66EC44200C2B43006ED146 /* LandingViewController.swift */,
 				0CC7D352200C79A700184299 /* ReadingDetailsViewController.swift */,
+				0CF1AA5B203E8901005507B2 /* ReadingModel.xcdatamodeld */,
 				0CC7D350200C321B00184299 /* TimerViewController.swift */,
 				0C66EC46200C2B43006ED146 /* Main.storyboard */,
 				0C66EC49200C2B43006ED146 /* Assets.xcassets */,
@@ -287,6 +290,7 @@
 				0C66EC45200C2B43006ED146 /* LandingViewController.swift in Sources */,
 				0C10AEE8202C41D80064CBED /* ReadingsTableViewCell.swift in Sources */,
 				0CC7D351200C321B00184299 /* TimerViewController.swift in Sources */,
+				0CF1AA5D203E8901005507B2 /* ReadingModel.xcdatamodeld in Sources */,
 				0C66EC43200C2B43006ED146 /* AppDelegate.swift in Sources */,
 				0C10AEE2202C3AF40064CBED /* LibraryTableViewController.swift in Sources */,
 			);
@@ -582,6 +586,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0CF1AA5B203E8901005507B2 /* ReadingModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0CF1AA5C203E8901005507B2 /* ReadingModel.xcdatamodel */,
+			);
+			currentVersion = 0CF1AA5C203E8901005507B2 /* ReadingModel.xcdatamodel */;
+			path = ReadingModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0C66EC37200C2B43006ED146 /* Project object */;
 }
