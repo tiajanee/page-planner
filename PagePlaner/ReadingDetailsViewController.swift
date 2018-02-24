@@ -234,22 +234,60 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     
     func calculatePlan()
     {
+        //grabbing inputed dates from ViewController
         let startDate = currentDateTextField.text
-        let fullfinalDate = datePickerText.text
+        let selectedHourGoal = Float(hoursGoalPickerData[hoursGoalPicker.selectedRow(inComponent: 0)])
+        
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd-yyyy"
-        let date = formatter.date(from: startDate!)
-        let endingDate = formatter.date(from: fullfinalDate!)
-        print(date!)
-        print(endingDate!)
-        
         formatter.dateFormat = "MM/dd/yyyy"
+        let date = formatter.date(from: startDate!)
         let startTime = date
-        let endTime = endingDate
         
-        let timeDifference = userCalendar.dateComponents(calendarComponents, from: startTime!, to: endTime!)
-        let diffMonth = timeDifference.month!
-        let diffDay = timeDifference.day!
+        //changing number strings to floats to be operated on
+        let numInt = Float(numOfPagesTextField.text!)!
+        let numPace = Float(timeElapsed)!
+        
+        //multiplying reading/page time by number of pages in book to get time(seconds) approximately user will spend reading in total
+        let totalTime = (numInt*numPace)
+        let hourTime = Int(totalTime/3600)
+
+        
+        if let fullfinalDate = datePickerText.text {
+
+            //formatting the Date strings to Date objects
+            let endingDate = formatter.date(from: fullfinalDate)
+            formatter.dateFormat = "MM/dd/yyyy"
+           
+            let endTime = endingDate
+            
+            //using User Calendar to find time elapsed between current date and goal date
+            let timeDifference = userCalendar.dateComponents(calendarComponents, from: startTime!, to: endTime!)
+            let diffMonth = timeDifference.month!
+            let diffDay = timeDifference.day!
+            let monthtoDay = (diffMonth*30)
+            let totalDays = (monthtoDay + diffDay)
+            
+            let timePerDay = (Float(hourTime)/Float(totalDays))
+            if timePerDay > 1.0 {
+                print("In order to finsh by \(endTime!), you must read \(timePerDay) hours a day.")
+
+            }
+            else {
+                print("In order to finish \(titleTextField.text)  by \(endTime!), you must read \(timePerDay*60) minutes a day.")
+
+            }
+        }
+
+        if selectedHourGoal != nil {
+            
+            //diving seconds by 3600 to get total reading time in hours
+          
+            let startDateComponents = userCalendar.dateComponents(calendarComponents, from:startTime!)
+            let startDateDay = Float(startDateComponents.day!)
+            let daysSpentReading = hourTime/Int(selectedHourGoal!)
+            let finishDate = Calendar.current.date(byAdding: .day, value: daysSpentReading, to: startTime!)
+            print("Reading \(titleTextField.text) for \(Int(selectedHourGoal!)) hour/s a day, gives you a \(finishDate!) finish date.")
+        }
         
         
         
