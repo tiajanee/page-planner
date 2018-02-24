@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 extension String {
     func removingWhitespaces() -> String {
         return components(separatedBy: .whitespaces).joined()
@@ -20,12 +21,13 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         
         return 0
     }
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 20.0
-    }
+
     
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        return 30.0
+        return 200.0
+    }
+    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 36.0
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -38,11 +40,25 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
             if pickerView.tag == 1 {
                 return hoursGoalPickerData[row]
-                hoursGoalPicker.subviews[0].subviews[1].isHidden = true
-                hoursGoalPicker.subviews[0].subviews[2].isHidden = true
         }
         
         return nil
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel = view as! UILabel!
+        if view == nil {  //if no label there yet
+            pickerLabel = UILabel()
+            //color the label's background
+            let hue = CGFloat(row)/CGFloat(hoursGoalPickerData.count)
+            pickerLabel?.backgroundColor = UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.50)
+        }
+        let titleData = hoursGoalPickerData[row]
+        let myTitle = NSAttributedString(string: titleData, attributes: [NSAttributedStringKey.font:UIFont(name: "Courier New", size: 30.0)!,NSAttributedStringKey.foregroundColor:UIColor.white])
+        pickerLabel!.attributedText = myTitle
+        pickerLabel!.textAlignment = .center
+        return pickerLabel!
+        
     }
    
    
@@ -51,55 +67,20 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     @IBOutlet weak var orLabel: UILabel!
     @IBOutlet weak var dateBackground: UIImageView!
     @IBOutlet weak var hoursBackground: UIImageView!
-
-    @IBOutlet weak var saveDetailsButton: UIButton!
     @IBOutlet weak var datePickerText: UITextField!
     @IBOutlet weak var hoursGoalPicker: UIPickerView!
-    
-    let hoursGoalPickerData = ["1", "2", "3", "4", "5", "6", "7", "8"]
-    
-    
-    
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var calculationLabel: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
-    
-    //adding done button regular keyboard 
-    func addDoneButtononKeyboard(textField: UITextField) {
-        let keyboardToolbar: UIToolbar = UIToolbar()
-        keyboardToolbar.items=[
-            UIBarButtonItem(title: "done", style: UIBarButtonItemStyle.done, target: textField, action: #selector(UITextField.resignFirstResponder)),
-            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        ]
-        
-        keyboardToolbar.sizeToFit()
-        keyboardToolbar.tintColor = UIColor.gray
-        keyboardToolbar.isTranslucent = true
-        // add a toolbar with a done button above the keyboard
-        titleTextField.inputAccessoryView = keyboardToolbar
-    }
-    //adding done button to numpad keyboard
-    func addDoneButtonOnNumpad(textField: UITextField) {
-        
-        let numKeypadToolbar: UIToolbar = UIToolbar()
-        numKeypadToolbar.items=[
-            UIBarButtonItem(title: "done", style: UIBarButtonItemStyle.done, target: textField, action: #selector(UITextField.resignFirstResponder)),
-            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        ]
-        numOfPagesTextField.keyboardType = UIKeyboardType.numberPad
-        numKeypadToolbar.sizeToFit()
-        numKeypadToolbar.tintColor = UIColor.gray
-        numKeypadToolbar.isTranslucent = true
-        // add a toolbar with a done button above the number pad
-        
-        //proper num keyboard pops up, but still have to implement
-        //checks to ensure user cannot type non numerical numbers
-    }
-    
     @IBOutlet weak var numOfPagesTextField: UITextField!
-    
     @IBOutlet weak var currentDateTextField: UITextField!
-    
+    let hoursGoalPickerData = ["1", "2", "3", "4", "5", "6", "7", "8"]
+
+    @IBAction func finalDonePressed(_ sender: Any) {
+        calculatePlan()
+        finalDonePressed()
+    }
+    var managedObjectContext:NSManagedObjectContext!
     let datePicker = UIDatePicker()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,13 +101,51 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         //does not allow users to choose goal dates that have already passed
         datePicker.minimumDate = Date()
         
-        
+        //adding done button regular keyboard
+        func addDoneButtononKeyboard(textField: UITextField) {
+            let keyboardToolbar: UIToolbar = UIToolbar()
+            keyboardToolbar.items=[
+                UIBarButtonItem(title: "done", style: UIBarButtonItemStyle.done, target: textField, action: #selector(UITextField.resignFirstResponder)),
+                UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+            ]
+            
+            keyboardToolbar.sizeToFit()
+            keyboardToolbar.tintColor = UIColor.gray
+            keyboardToolbar.isTranslucent = true
+            // add a toolbar with a done button above the keyboard
+            titleTextField.inputAccessoryView = keyboardToolbar
+        }
+        //adding done button to numpad keyboard
+        func addDoneButtonOnNumpad(textField: UITextField) {
+            let numKeypadToolbar: UIToolbar = UIToolbar()
+            let done = UIBarButtonItem(title: "done", style: UIBarButtonItemStyle.done, target: textField, action: #selector(UITextField.resignFirstResponder))
+            let flexible = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+            numKeypadToolbar.items=[done, flexible]
+            numKeypadToolbar.sizeToFit()
+            numKeypadToolbar.tintColor = UIColor.gray
+            numKeypadToolbar.isTranslucent = true
+            // add a toolbar with a done button above the number pad
+            
+            numOfPagesTextField.inputAccessoryView = numKeypadToolbar
+            
+            //proper num keyboard pops up, but still have to implement
+            //checks to ensure user cannot type non numerical numbers
+            
+            //customizing the UILabels in the calculation section
+            hoursBackground.layer.shadowColor =  UIColor.black.cgColor
+            hoursBackground.layer.shadowOpacity = 0.50
+            hoursBackground.layer.shadowOffset = CGSize(width: 1.0, height:1.0)
+            
+            dateBackground.layer.shadowColor = UIColor.black.cgColor
+            dateBackground.layer.shadowOpacity = 0.50
+            dateBackground.layer.shadowOffset = CGSize(width: 1.0, height:1.0)
+        }
 
         
         
         //customizing UILabels
         let newColor = UIColor.black.cgColor
-//       
+
         //adding data from array to UIPickers
         hoursGoalPicker.dataSource = self
         hoursGoalPicker.delegate = self
@@ -147,7 +166,7 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         //goalDatePicker.datePickerMode = .date
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US")
-        dateFormatter.setLocalizedDateFormatFromTemplate("MMMd")
+        dateFormatter.setLocalizedDateFormatFromTemplate("yyyy-MMM-dd")
         currentDate = dateFormatter.string(from: Date())
         currentDateTextField.text = currentDate
         //let selectedDate = dateFormatter.string(from: goalDatePicker.date)
@@ -173,7 +192,6 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     }
     
     @objc func donePressed() {
-        
         //formatting date
         let finishDateFormatter = DateFormatter()
         finishDateFormatter.dateStyle = .medium
@@ -182,55 +200,62 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         datePickerText.text = finishDateFormatter.string(from: datePicker.date)
         self.view.endEditing(true)
         
-        let startDate = Date()
-        let endDate = datePicker.date
+        
         
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
-        formatter.allowedUnits = [.month, .day]
-        formatter.maximumUnitCount = 2   // often, you don't care about seconds if the elapsed time is in months, so you'll set max unit to whatever is appropriate in your case
-        
-        /*
-         Formatting the dateDifference calculated String to include only the month and day
-         numerical difference. Saves those to integers to different variables for
-         easier future calculations.
-         */
-//        if let string = formatter.string(from: startDate, to: endDate) {
-//            let intString = string.components(
-//                separatedBy: NSCharacterSet
-//                    .decimalDigits
-//                    .inverted)
-//                .joined(separator: " ")
-//
-//            let trimmedString = intString.removingWhitespaces()
-//            print(trimmedString)
-//
-//            let startindex = trimmedString.characters.index(trimmedString.startIndex, offsetBy: 0)
-//            let monthAmount = trimmedString[startindex]
-//            print(monthAmount)
-//
-//            let endindex = trimmedString.characters.index(trimmedString.startIndex, offsetBy: 1)
-//            let editedDayAmount = trimmedString[endindex]
-//            let dayAmount = Int(String(editedDayAmount))!
-//
-//            let monthToDays = (Int(String(monthAmount)))!*30
-//            print(monthToDays)
-//
-//            let totalDayAmount = monthToDays + dayAmount
-//            print(totalDayAmount)
-//
-//            let readingTime = Double(timeElapsed)! * Double(numOfPagesTextField.text!)!
-//            let perDay = (readingTime/Double(totalDayAmount))
-//            print(perDay)
-//
-//            } else {
-//                print("error")
-//        }
-//
-//
-   }
-//
+        formatter.allowedUnits = [.month, .day, .year]
+        formatter.maximumUnitCount = 2
+    }
     
+    
+    @objc func finalDonePressed() {
+        
+        let fakeDate = "March 23, 2018"
+        let fakePace = "2 hours/day"
+        let fakeTitle = "Where the Wild Things Are"
+        
+        let newReading =  Reading(context: MangagedSingleton.managedObjectContext)
+        newReading.name = fakeTitle
+        newReading.pace = fakePace
+        newReading.dueDate = fakeDate
+        
+        do {
+            try MangagedSingleton.managedObjectContext.save()
+        } catch {
+            print("Oh shit nigga, something went wrong.")
+        }
+        
+
+   }
+    
+    let userCalendar = Calendar.current
+    let calendarComponents : Set<Calendar.Component> = [.month, .day, .year]
+    
+    func calculatePlan()
+    {
+        let startDate = currentDateTextField.text
+        let fullfinalDate = datePickerText.text
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM-dd-yyyy"
+        let date = formatter.date(from: startDate!)
+        let endingDate = formatter.date(from: fullfinalDate!)
+        print(date!)
+        print(endingDate!)
+        
+        formatter.dateFormat = "MM/dd/yyyy"
+        let startTime = date
+        let endTime = endingDate
+        
+        let timeDifference = userCalendar.dateComponents(calendarComponents, from: startTime!, to: endTime!)
+        let diffMonth = timeDifference.month!
+        let diffDay = timeDifference.day!
+        
+        
+        
+   
+
+    }
 }
 
 
