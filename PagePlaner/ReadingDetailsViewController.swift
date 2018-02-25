@@ -78,7 +78,6 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
 
     @IBAction func finalDonePressed(_ sender: Any) {
         calculatePlan()
-        finalDonePressed()
     }
     var managedObjectContext:NSManagedObjectContext!
     let datePicker = UIDatePicker()
@@ -209,35 +208,20 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     }
     
     
-    @objc func finalDonePressed() {
-        
-        let fakeDate = "March 23, 2018"
-        let fakePace = "2 hours/day"
-        let fakeTitle = "Where the Wild Things Are"
-        
-        let newReading =  Reading(context: MangagedSingleton.managedObjectContext)
-        newReading.name = fakeTitle
-        newReading.pace = fakePace
-        newReading.dueDate = fakeDate
-        
-        do {
-            try MangagedSingleton.managedObjectContext.save()
-        } catch {
-            print("Oh shit nigga, something went wrong.")
-        }
-        
-
-   }
-    
     let userCalendar = Calendar.current
     let calendarComponents : Set<Calendar.Component> = [.month, .day, .year]
     
-    func calculatePlan()
+    @objc func calculatePlan()
     {
+        
+        let newReading =  Reading(context: MangagedSingleton.managedObjectContext)
+        
+       
         //grabbing inputed dates from ViewController
         let startDate = currentDateTextField.text
         let selectedHourGoal = Float(hoursGoalPickerData[hoursGoalPicker.selectedRow(inComponent: 0)])
         
+        //formatting date
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
         let date = formatter.date(from: startDate!)
@@ -250,13 +234,15 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         //multiplying reading/page time by number of pages in book to get time(seconds) approximately user will spend reading in total
         let totalTime = (numInt*numPace)
         let hourTime = Int(totalTime/3600)
-
         
-        if let fullfinalDate = datePickerText.text {
-
+        
+        
+//        if datePickerText.text != nil {
+        
+            print(datePickerText.text!)
             //formatting the Date strings to Date objects
-            let endingDate = formatter.date(from: fullfinalDate)
-            formatter.dateFormat = "MM/dd/yyyy"
+            let fullfinalDate = datePickerText.text
+            let endingDate = formatter.date(from: fullfinalDate!)
            
             let endTime = endingDate
             
@@ -267,28 +253,73 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
             let monthtoDay = (diffMonth*30)
             let totalDays = (monthtoDay + diffDay)
             
+            //calculating reading time required per day
             let timePerDay = (Float(hourTime)/Float(totalDays))
+            
+            //formatting date in table view cell
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US")
+            dateFormatter.setLocalizedDateFormatFromTemplate("yyyy-MMM-dd")
+            let formatEndTime = dateFormatter.string(from: endTime!)
             if timePerDay > 1.0 {
                 print("In order to finsh by \(endTime!), you must read \(timePerDay) hours a day.")
-
+                
+                newReading.name =  titleTextField.text!
+                newReading.pace = String(Double(timePerDay)) + " hrs/day"
+                newReading.dueDate = formatEndTime
             }
             else {
-                print("In order to finish \(titleTextField.text)  by \(endTime!), you must read \(timePerDay*60) minutes a day.")
-
+                
+                //converts hours to minutes if reading pace under an hour
+                print("In order to finish \(titleTextField.text!)  by \(endTime!), you must read \(timePerDay*60) minutes a day.")
+                newReading.name =  titleTextField.text!
+                newReading.pace = String(Double(timePerDay*60)) + " min/day"
+                newReading.dueDate = formatEndTime
             }
-        }
+            do {
+                try MangagedSingleton.managedObjectContext.save()
+            } catch {
+                fatalError("Failure to save context: \(error)")
+            }
 
-        if selectedHourGoal != nil {
-            
-            //diving seconds by 3600 to get total reading time in hours
-          
-            let startDateComponents = userCalendar.dateComponents(calendarComponents, from:startTime!)
-            let startDateDay = Float(startDateComponents.day!)
-            let daysSpentReading = hourTime/Int(selectedHourGoal!)
-            let finishDate = Calendar.current.date(byAdding: .day, value: daysSpentReading, to: startTime!)
-            print("Reading \(titleTextField.text) for \(Int(selectedHourGoal!)) hour/s a day, gives you a \(finishDate!) finish date.")
-        }
-        
+//        }
+
+//        if selectedHourGoal != nil {
+//
+//            //formatting date that appears in table view cell
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.locale = Locale(identifier: "en_US")
+//            dateFormatter.setLocalizedDateFormatFromTemplate("yyyy-MMM-dd")
+//
+//            //diving seconds by 3600 to get total reading time in hours
+//            let daysSpentReading = hourTime/Int(selectedHourGoal!)
+//            let finishDate = Calendar.current.date(byAdding: .day, value: daysSpentReading, to: startTime!)
+//            print("Reading \(titleTextField.text!) for \(Int(selectedHourGoal!)) hour/s a day, gives you a \(finishDate!) finish date.")
+//
+//            //setting the reading details in entities in Core Data
+//            let formatFinishDate = dateFormatter.string(from: finishDate!)
+//            newReading.name =  titleTextField.text!
+//            newReading.pace = String(describing: Double(selectedHourGoal!)) + " hrs/day"
+//            newReading.dueDate = formatFinishDate
+//
+//            //saves reading details to Core Data
+//            do {
+//                try MangagedSingleton.managedObjectContext.save()
+//            } catch {
+//                fatalError("Failure to save context: \(error)")
+//            }
+//        }
+//
+//        //if user does not fill out either column for readingPlan, raise UIAlertController
+//        if datePickerText.text! != nil && selectedHourGoal == nil {
+//            let alert = UIAlertController(title: "Did you choose a goal date or a goal hour per day?", message: "Please choose one or the other and not both.", preferredStyle: .alert)
+//
+//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//
+//            self.present(alert, animated: true)
+//
+//        }
+//
         
         
    
