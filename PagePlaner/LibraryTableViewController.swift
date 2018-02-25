@@ -67,7 +67,7 @@ class LibraryTableViewController: UITableViewController {
         return cell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110
+        return 150
     }
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -75,21 +75,22 @@ class LibraryTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            // handle delete (by removing the data from your array and updating the tableview)
-//            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-//            let readingRequest:NSFetchRequest<Reading> = Reading.fetchRequest()
-//            if let result = try? MangagedSingleton.managedObjectContext.fetch(readingRequest) {
-//                for object in result {
-//                    MangagedSingleton.managedObjectContext.delete(object)
-//                    try MangagedSingleton.managedObjectContext.save()
-//                    catch do {
-//                        print("could not delete")
-//                    }
-//                }
-//            }
-//            //delete reading from Core Data
-            print("delete tableview cell")
+            
+            let readingRequest:NSFetchRequest<Reading> = Reading.fetchRequest()
+            
+            do {
+                readings = try MangagedSingleton.managedObjectContext.fetch(readingRequest)
+            } catch {
+                print("oh no nigga")
+            }
+            if let result = try? MangagedSingleton.managedObjectContext.fetch(readingRequest) {
+                for object in result {
+                    MangagedSingleton.managedObjectContext.delete(object)
+
+                }
+            }
             tableView.reloadData()
+            print("delete tableview cell")
 
 
         }
