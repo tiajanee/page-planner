@@ -19,7 +19,6 @@ class TimerViewController: UIViewController {
     @IBOutlet weak var resetBackground: UIImageView!
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var endBackground: UIImageView!
-    @IBOutlet weak var logoLabel: UITextView!
     //initial time starts at 0
     var time = 0.00
     //timer
@@ -34,7 +33,7 @@ class TimerViewController: UIViewController {
     @IBAction func endTimer(_ sender: UIButton) {
         //stops timer
         timer.invalidate()
-        timeElapsed = (timerLabel.text)!
+        timeElapsed = ("96.78")
     }
     @IBAction func startTimer(_ sender: Any) {
         //timer with milliseconds
@@ -48,8 +47,7 @@ class TimerViewController: UIViewController {
     override func viewDidLoad() {
         self.navigationItem.title = "TIMER"
         self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "LibreBarcode39Text-Regular", size: 40)!]
-        logoLabel.font = UIFont(name:"LibreBarcode39Text-Regular", size: 70.0)
-        logoLabel.layer.opacity = 0.35
+       
         endButton.layer.shadowColor = UIColor.black.cgColor
         endButton.layer.shadowOffset = CGSize(width: 0.1, height: 0.1)
         endButton.layer.shadowOpacity = 0.50
