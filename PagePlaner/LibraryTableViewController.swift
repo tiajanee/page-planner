@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-public final class MangagedSingleton {
+public final class ManagedSingleton {
     static let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
 }
@@ -33,7 +33,7 @@ class LibraryTableViewController: UITableViewController {
         let readingRequest:NSFetchRequest<Reading> = Reading.fetchRequest()
         
         do {
-            readings = try MangagedSingleton.managedObjectContext.fetch(readingRequest)
+            readings = try ManagedSingleton.managedObjectContext.fetch(readingRequest)
             self.tableView.reloadData()
         } catch {
             print("oh no nigga")
@@ -72,29 +72,32 @@ class LibraryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
+
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.delete) {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteAction = UITableViewRowAction(style: .normal, title:"Delete") { (_, indexPath) in
+            let reading = self.readings[indexPath.row]
+//            print(“Attempting to delete company:“, company.name ?? “”)
             
-            let readingRequest:NSFetchRequest<Reading> = Reading.fetchRequest()
+            // remove the company from our tableview
+            self.readings.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            // delete the company from Core Data
+//            let context = CoreDataManager.shared.persistentContainer.viewContext
+            let context = ManagedSingleton.managedObjectContext
+            context.delete(reading)
             
             do {
-                readings = try MangagedSingleton.managedObjectContext.fetch(readingRequest)
-            } catch {
-                print("oh no nigga")
+                try context.save()
+            } catch let saveError {
+//                print(“Failed to delete company:“, saveError)
             }
-            if let result = try? MangagedSingleton.managedObjectContext.fetch(readingRequest) {
-                for object in result {
-                    MangagedSingleton.managedObjectContext.delete(object)
-
-                }
-            }
-            tableView.reloadData()
-            print("delete tableview cell")
-
-
         }
+        return [deleteAction]
     }
+    
    
     
 
