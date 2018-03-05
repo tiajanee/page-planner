@@ -8,39 +8,7 @@
 
 import UIKit
 import CoreData
-extension String {
-    func removingWhitespaces() -> String {
-        return components(separatedBy: .whitespaces).joined()
-    }
-}
-extension String {
-    func isValidDouble(maxDecimalPlaces: Int) -> Bool {
-        // Use NumberFormatter to check if we can turn the string into a number
-        // and to get the locale specific decimal separator.
-        let formatter = NumberFormatter()
-        formatter.allowsFloats = true // Default is true, be explicit anyways
-        let decimalSeparator = formatter.decimalSeparator ?? "."  // Gets the locale specific decimal separator. If for some reason there is none we assume "." is used as separator.
-        
-        // Check if we can create a valid number. (The formatter creates a NSNumber, but
-        // every NSNumber is a valid double, so we're good!)
-        if formatter.number(from: self) != nil {
-            // Split our string at the decimal separator
-            let split = self.components(separatedBy: decimalSeparator)
-            
-            // Depending on whether there was a decimalSeparator we may have one
-            // or two parts now. If it is two then the second part is the one after
-            // the separator, aka the digits we care about.
-            // If there was no separator then the user hasn't entered a decimal
-            // number yet and we treat the string as empty, succeeding the check
-            let digits = split.count == 2 ? split.last ?? "" : ""
-            
-            // Finally check if we're <= the allowed digits
-            return digits.characters.count <= maxDecimalPlaces    // TODO: Swift 4.0 replace with digits.count, YAY!
-        }
-        
-        return false // couldn't turn string into a valid number
-    }
-}
+
 class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView.tag == 1 {
@@ -54,8 +22,8 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         return 200.0
     }
-    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 36.0
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 45.0
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -78,8 +46,7 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         if view == nil {  //if no label there yet
             pickerLabel = UILabel()
             //color the label's background
-            let hue = CGFloat(row)/CGFloat(hoursGoalPickerData.count)
-            pickerLabel?.backgroundColor = UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.50)
+            pickerLabel?.backgroundColor = UIColor.black
         }
         let titleData = hoursGoalPickerData[row]
         let myTitle = NSAttributedString(string: titleData, attributes: [NSAttributedStringKey.font:UIFont(name: "Courier New", size: 30.0)!,NSAttributedStringKey.foregroundColor:UIColor.white])
@@ -104,20 +71,26 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     @IBOutlet weak var currentDateTextField: UITextField!
     let hoursGoalPickerData = ["0","1", "2", "3", "4", "5", "6", "7", "8"]
 
-   
-
+    @IBOutlet weak var cancelButton: UIButton!
+    
+    @IBAction func cancelButtonPressed(_ sender: Any) {
+        cancelReading()
+    }
+    
     @IBAction func finalDonePressed(_ sender: Any) {
         calculatePlan()
     }
     var managedObjectContext:NSManagedObjectContext!
     let datePicker = UIDatePicker()
+    
+        
+
     override func viewDidLoad() {
         super.viewDidLoad()
         createDatePicker()
         hoursGoalPicker.backgroundColor = UIColor.black
         hoursGoalPicker.layer.borderWidth = 0.35
         hoursGoalPicker.layer.borderColor = UIColor.white.cgColor
-        
         
         self.navigationItem.title = "PLAN"
         self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "LibreBarcode39Text-Regular", size: 40)!]
@@ -127,8 +100,7 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         
         hoursBackground.layer.borderWidth = 0.35
         hoursBackground.layer.borderColor = UIColor.gray.cgColor
-        //does not allow users to choose goal dates that have already passed
-        datePicker.minimumDate = Date()
+        
         
         //adding done button regular keyboard
         func addDoneButtononKeyboard(textField: UITextField) {
@@ -144,6 +116,7 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
             // add a toolbar with a done button above the keyboard
             titleTextField.inputAccessoryView = keyboardToolbar
         }
+        
         //adding done button to numpad keyboard
         func addDoneButtonOnNumpad(textField: UITextField) {
             let numKeypadToolbar: UIToolbar = UIToolbar()
@@ -153,12 +126,10 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
             numKeypadToolbar.sizeToFit()
             numKeypadToolbar.tintColor = UIColor.gray
             numKeypadToolbar.isTranslucent = true
-            // add a toolbar with a done button above the number pad
             
+            // add a toolbar with a done button above the number pad
             numOfPagesTextField.inputAccessoryView = numKeypadToolbar
             
-            //proper num keyboard pops up, but still have to implement
-            //checks to ensure user cannot type non numerical numbers
             
             //customizing the UILabels in the calculation section
             hoursBackground.layer.shadowColor =  UIColor.black.cgColor
@@ -177,11 +148,9 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         hoursGoalPicker.dataSource = self
         hoursGoalPicker.delegate = self
         
-        let hoursGoalPickerColor = UIColor(red: 0 , green: 0, blue: 0, alpha: 0.7)
-        hoursGoalPicker.backgroundColor = UIColor.clear
-//        hoursGoalPicker.layer.borderColor = UIColor.black as! CGColor
         hoursGoalPicker.layer.borderWidth = 0.5
-        
+        hoursGoalPicker.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
+
         
         
         //calling done buttons on keyboard functions
@@ -203,6 +172,8 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     func createDatePicker() {
         
         datePicker.datePickerMode = .date
+        
+        //prevents user from choosing goal date earlier than current date
         self.datePicker.minimumDate = Date()
        
         let toolbar = UIToolbar()
@@ -213,10 +184,12 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         toolbar.tintColor = UIColor.gray
         toolbar.isTranslucent = true
         datePickerText.inputAccessoryView = toolbar
-
         datePickerText.inputView = datePicker
     }
     
+    @objc func cancelReading() {
+        self.performSegue(withIdentifier: "cancel", sender: self)
+    }
     
     @objc func donePressed() {
         //formatting date
@@ -242,40 +215,46 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
     @objc func calculatePlan()
     {
         
-        // Unwrap'=
+        //Checking text fields for empty strings
+        if numOfPagesTextField.text == "" {
+            let alert = UIAlertController(title: "Did you enter the number of pages you have to read?", message: "Please enter a page number.", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+
+            self.present(alert, animated: true)
+            
+            return
+        }
         let numText = numOfPagesTextField.text
-        if let numText {
-            print(numText)
-            let alert = UIAlertController(title: "Did you choose a goal date or a goal hour per day?", message: "Please choose one or the other and not both.", preferredStyle: .alert)
+        if titleTextField.text == "" {
+            let alert = UIAlertController(title: "Did you enter a title for your reading?", message: "Please enter a title.", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             
             self.present(alert, animated: true)
+            
+            return
         }
-        guard let titleText = titleTextField.text,
-            let datePickerText = datePickerText.text
+        
+        let titleText = titleTextField.text
+        
+        guard let datePickerText = datePickerText.text
         else {return }
-        
-        
-     
-        
-        
-    
-        let newReading =  Reading(context: ManagedSingleton.managedObjectContext)
         
        
         //grabbing inputed dates from ViewController
         let startDate = currentDateTextField.text
         let selectedHourGoal = Float(hoursGoalPickerData[hoursGoalPicker.selectedRow(inComponent: 0)])
         
-        //if user fills  out either column for readingPlan, raise UIAlertController
-        if selectedHourGoal == 1 {
+        //if user fills out either column for readingPlan, raise UIAlertController
+        if selectedHourGoal == 0 && datePickerText == "" {
             let alert = UIAlertController(title: "Did you choose a goal date or a goal hour per day?", message: "Please choose one or the other and not both.", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             
             self.present(alert, animated: true)
             
+            return
         }
         
         
@@ -285,21 +264,30 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         let date = formatter.date(from: startDate!)
         let startTime = date
         
-            
-        
         
         //changing number strings to floats to be operated on
-        let numInt = Float(Int(numText!)!)
+        let numInt = Float(numText!)
         let numPace = Float(timeElapsed)!
         
+        //checking for non-numerical values in numOfPagesTextField
+        if numInt == nil {
+            let alert = UIAlertController(title: "Did input non-numerical values for page numbers?", message: "Please use numbers 0-9 only.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+            
+            return
+        }
+        
         //multiplying reading/page time by number of pages in book to get time(seconds) approximately user will spend reading in total
-        let totalTime = (numInt*numPace)
+        let totalTime = (numInt!*numPace)
         let hourTime = Int(totalTime/3600)
         
       
         
         if selectedHourGoal != 0 {
-            
+            let newReading =  Reading(context: ManagedSingleton.managedObjectContext)
             //formatting date that appears in table view cell
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US")
@@ -308,7 +296,6 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
             //diving seconds by 3600 to get total reading time in hours
             let daysSpentReading = hourTime/Int(selectedHourGoal!)
             let finishDate = Calendar.current.date(byAdding: .day, value: daysSpentReading, to: startTime!)
-            print("Reading \(titleText) for \(Int(selectedHourGoal!)) hour/s a day, gives you a \(finishDate!) finish date.")
             
             //setting the reading details in entities in Core Data
             let formatFinishDate = dateFormatter.string(from: finishDate!)
@@ -323,7 +310,7 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
                 fatalError("Failure to save context: \(error)")
             }
         } else {
-
+            let newReading =  Reading(context: ManagedSingleton.managedObjectContext)
             //formatting the Date strings to Date objects
             let fullfinalDate = datePickerText
             let endingDate = formatter.date(from: fullfinalDate)
@@ -348,25 +335,29 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
             dateFormatter.setLocalizedDateFormatFromTemplate("yyyy-MMM-dd")
             let formatEndTime = dateFormatter.string(from: endTime!)
             if timePerDay > 1.0 {
-                print("In order to finsh by \(endTime!), you must read \(timePerDay) hours or \(timePerDay*60) min a day.")
                 
                 newReading.name =  titleTextField.text!
                 newReading.pace = String(roundedHourPerDay) + " hrs/day or " + String(roundedMinPerDay) + " min/day"
                 newReading.dueDate = formatEndTime
-            }
-            else {
+                
                 
                 //converts hours to minutes if reading pace under an hour
-                print("In order to finish \(titleText)  by \(endTime!), you must read \(timePerDay*60) minutes a day.")
                 newReading.name =  titleText
                 newReading.pace = String(timePerDay*60) + " min/day"
                 newReading.dueDate = formatEndTime
+                
+                //saves new reading to be displayed in LibraryTableView
+                do {
+                    try ManagedSingleton.managedObjectContext.save()
+                } catch {
+                    fatalError("Failure to save context: \(error)")
+                }
+                
             }
-            do {
-                try ManagedSingleton.managedObjectContext.save()
-            } catch {
-                fatalError("Failure to save context: \(error)")
-            }
+            
+            
+        
+                
             
             
         

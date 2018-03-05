@@ -91,7 +91,7 @@ class LibraryTableViewController: UITableViewController {
             
             do {
                 try context.save()
-            } catch let saveError {
+            } catch _ {
 //                print(“Failed to delete company:“, saveError)
             }
         }
