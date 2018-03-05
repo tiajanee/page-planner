@@ -14,11 +14,11 @@ class TimerViewController: UIViewController {
     
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var startBackground: UIImageView!
     @IBOutlet weak var endButton: UIButton!
-    @IBOutlet weak var resetBackground: UIImageView!
     @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var endBackground: UIImageView!
+    
+    
+    
     //initial time starts at 0
     var time = 0.00
     //timer
@@ -31,10 +31,27 @@ class TimerViewController: UIViewController {
 
     }
     @IBAction func endTimer(_ sender: UIButton) {
+        //does not allow user to enter empty time
+        if timerLabel.text == "0.00" {
+            let noTimeAlert = UIAlertController(title: "Did you time yourself?", message: "If you submit an empty time, you won't get a reading plan. 😤", preferredStyle: .alert)
+            
+            noTimeAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(noTimeAlert, animated: true)
+            return
+        }
+        
         //stops timer
         timer.invalidate()
-        timeElapsed = ("96.78")
+        
+        timeElapsed = timerLabel.text!
+    
+       
+        
+
+        
+        
     }
+        
     @IBAction func startTimer(_ sender: Any) {
         //timer with milliseconds
         timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(TimerViewController.action), userInfo: nil, repeats: true)
@@ -48,6 +65,15 @@ class TimerViewController: UIViewController {
         self.navigationItem.title = "TIMER"
         self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "LibreBarcode39Text-Regular", size: 40)!]
        
+        
+        //directions for how to use the app
+        let howToAlert = UIAlertController(title: "How to get the most accurate reading time...", message: "Pick any full page and time yourself reading that singular page from start to finish. Relax and take your time, no one is quizzing you. 😉", preferredStyle: .alert)
+        
+        howToAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(howToAlert, animated: true)
+        
+        
         endButton.layer.shadowColor = UIColor.black.cgColor
         endButton.layer.shadowOffset = CGSize(width: 0.1, height: 0.1)
         endButton.layer.shadowOpacity = 0.50
@@ -57,12 +83,7 @@ class TimerViewController: UIViewController {
         resetButton.layer.shadowColor = UIColor.black.cgColor
         resetButton.layer.shadowOffset = CGSize(width: 0.1, height: 0.1)
         resetButton.layer.shadowOpacity = 0.50
-        resetBackground.layer.borderWidth = 0.50
-        resetBackground.layer.borderColor = UIColor.gray.cgColor
-        endBackground.layer.borderColor = UIColor.gray.cgColor
-        endBackground.layer.borderWidth = 0.50
-        startBackground.layer.borderColor = UIColor.gray.cgColor
-        startBackground.layer.borderWidth = 0.50
+   
         
         timerLabel.layer.shadowOpacity = 1
         timerLabel.layer.shadowColor = UIColor.gray.cgColor
