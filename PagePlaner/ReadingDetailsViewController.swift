@@ -46,10 +46,10 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         if view == nil {  //if no label there yet
             pickerLabel = UILabel()
             //color the label's background
-            pickerLabel?.backgroundColor = UIColor.black
+            pickerLabel?.backgroundColor = UIColor.darkGray
         }
         let titleData = hoursGoalPickerData[row]
-        let myTitle = NSAttributedString(string: titleData, attributes: [NSAttributedStringKey.font:UIFont(name: "Courier New", size: 30.0)!,NSAttributedStringKey.foregroundColor:UIColor.white])
+        let myTitle = NSAttributedString(string: titleData, attributes: [NSAttributedStringKey.font:UIFont(name: "Courier New", size: 25.0)!,NSAttributedStringKey.foregroundColor:UIColor.white])
         pickerLabel!.attributedText = myTitle
         pickerLabel!.textAlignment = .center
         return pickerLabel!
@@ -87,10 +87,11 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(timeElapsed)
         createDatePicker()
-        hoursGoalPicker.backgroundColor = UIColor.black
+        hoursGoalPicker.backgroundColor = UIColor.darkGray
         hoursGoalPicker.layer.borderWidth = 0.35
-        hoursGoalPicker.layer.borderColor = UIColor.white.cgColor
+        hoursGoalPicker.layer.borderColor = UIColor.black.cgColor
         
         self.navigationItem.title = "PLAN"
         self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "LibreBarcode39Text-Regular", size: 40)!]
@@ -100,6 +101,8 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         
         hoursBackground.layer.borderWidth = 0.35
         hoursBackground.layer.borderColor = UIColor.gray.cgColor
+        
+
         
         
         //adding done button regular keyboard
@@ -271,7 +274,7 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
         
         //checking for non-numerical values in numOfPagesTextField
         if numInt == nil {
-            let alert = UIAlertController(title: "Did input non-numerical values for page numbers?", message: "Please use numbers 0-9 only.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Did you input non-numerical values for page numbers?", message: "Please use numbers 0-9 only.", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             
@@ -336,15 +339,11 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
             let formatEndTime = dateFormatter.string(from: endTime!)
             if timePerDay > 1.0 {
                 
-                newReading.name =  titleTextField.text!
+                //converts hours to minutes if reading pace under an hour
+                newReading.name =  titleText
                 newReading.pace = String(roundedHourPerDay) + " hrs/day or " + String(roundedMinPerDay) + " min/day"
                 newReading.dueDate = formatEndTime
                 
-                
-                //converts hours to minutes if reading pace under an hour
-                newReading.name =  titleText
-                newReading.pace = String(timePerDay*60) + " min/day"
-                newReading.dueDate = formatEndTime
                 
                 //saves new reading to be displayed in LibraryTableView
                 do {
@@ -353,16 +352,18 @@ class ReadingDetailsViewController: UIViewController, UIPickerViewDataSource, UI
                     fatalError("Failure to save context: \(error)")
                 }
                 
+            } else {
+                newReading.name =  titleText
+                newReading.pace = String(roundedMinPerDay) + " min/day"
+                newReading.dueDate = formatEndTime
+                
+            do {
+                try ManagedSingleton.managedObjectContext.save()
+            } catch {
+                fatalError("Failure to save context: \(error)")
             }
             
-            
-        
-                
-            
-            
-        
-            
-
+            }
         }
 
 
