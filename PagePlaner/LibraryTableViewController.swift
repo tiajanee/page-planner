@@ -28,6 +28,7 @@ class LibraryTableViewController: UITableViewController {
         
         loadData()
         
+        //if there are no readings in the library, raise Alert
         if tableView.visibleCells.isEmpty {
             let newReadingHelpAlert = UIAlertController(title: "You have no reading plans in your library.", message: "Click the + button in the upper right hand corner to design a new reading plan.", preferredStyle: .alert)
             
@@ -89,23 +90,22 @@ class LibraryTableViewController: UITableViewController {
         
         let deleteAction = UITableViewRowAction(style: .normal, title:"Delete") { (_, indexPath) in
             let reading = self.readings[indexPath.row]
-//            print(“Attempting to delete company:“, company.name ?? “”)
             
-            // remove the company from our tableview
+            // remove the reading from our tableview
             self.readings.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
             
-            // delete the company from Core Data
-//            let context = CoreDataManager.shared.persistentContainer.viewContext
+
             let context = ManagedSingleton.managedObjectContext
             context.delete(reading)
             
+            //save changes
             do {
                 try context.save()
             } catch _ {
-//                print(“Failed to delete company:“, saveError)
             }
-        }
+
+         }
         return [deleteAction]
     }
     
