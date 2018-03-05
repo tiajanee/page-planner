@@ -20,13 +20,23 @@ class LibraryTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.navigationItem.title = "LIBRARY"
-    self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "LibreBarcode39Text-Regular", size: 40)!]
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "LibreBarcode39Text-Regular", size: 40)!]
         
-    self.navigationController?.navigationBar.barTintColor = UIColor.white
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         
         loadData()
+        
+        if tableView.visibleCells.isEmpty {
+            let newReadingHelpAlert = UIAlertController(title: "You have no reading plans in your library.", message: "Click the + button in the upper right hand corner to design a new reading plan.", preferredStyle: .alert)
+            
+            newReadingHelpAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(newReadingHelpAlert, animated: true)
+            
+        }
+        
     }
     
     func loadData() {
@@ -36,7 +46,7 @@ class LibraryTableViewController: UITableViewController {
             readings = try ManagedSingleton.managedObjectContext.fetch(readingRequest)
             self.tableView.reloadData()
         } catch {
-            print("oh no nigga")
+            print("could not retrieve the data.")
         }
     }
 
@@ -58,7 +68,7 @@ class LibraryTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LibCell", for: indexPath) as! ReadingsTableViewCell
 
         // Configure the cell...
-        
+
         let readingItem = readings[indexPath.row]
         cell.calcDate.text = readingItem.dueDate
         cell.calcName.text = readingItem.name
@@ -68,6 +78,7 @@ class LibraryTableViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
+        
     }
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
