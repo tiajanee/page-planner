@@ -23,6 +23,7 @@ class TimerViewController: UIViewController {
     var time = 0.00
     //timer
     var timer = Timer()
+    var startButtonPressed = false
     @IBAction func resetButton(_ sender: Any) {
         //stops timer and resets it back to 0
         timer.invalidate()
@@ -32,27 +33,32 @@ class TimerViewController: UIViewController {
     }
     @IBAction func endTimer(_ sender: UIButton) {
         //does not allow user to enter empty time
-        if timerLabel.text == "0.00" {
-            let noTimeAlert = UIAlertController(title: "Did you time yourself?", message: "If you submit an empty time, you won't get a reading plan. 😤", preferredStyle: .alert)
+        if timerLabel.text == "0.00" || !startButtonPressed {
+            let noTimeAlert = UIAlertController(title: "Did you time yourself?", message: "If you submit an empty time, you won't get a reading plan 😤", preferredStyle: .alert)
             
             noTimeAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(noTimeAlert, animated: true)
             return
-        }
-        
-        //stops timer
-        timer.invalidate()
-        
-        timeElapsed = timerLabel.text!
-    
-       
-        
+        } else {
+            //stops timer
+            timer.invalidate()
+            
+            //saves time to global variable timeElapsed
+            timeElapsed = timerLabel.text!
+            
+            //navigates to ReadingDetails View Controller
+            let planViewController = self.storyboard?.instantiateViewController(withIdentifier: "ReadingsDetails") as! ReadingDetailsViewController
+            self.navigationController?.pushViewController(planViewController, animated: true)
 
+            
+        }
         
         
     }
         
     @IBAction func startTimer(_ sender: Any) {
+        //ensures user does not try to make a reading plan without timing themselves
+        startButtonPressed = true
         //timer with milliseconds
         timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(TimerViewController.action), userInfo: nil, repeats: true)
     }
