@@ -30,11 +30,18 @@ class LibraryTableViewController: UITableViewController {
         
         //if there are no readings in the library, raise Alert
         if tableView.visibleCells.isEmpty {
-            let newReadingHelpAlert = UIAlertController(title: "You have no reading plans in your library.", message: "Click the + button in the upper right hand corner to design a new reading plan.", preferredStyle: .alert)
+        
+            let imageName = "emptyTableView"
+            let image = UIImage(named: imageName)
+            let imageView = UIImageView(image: image!)
             
-            newReadingHelpAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            imageView.frame = CGRect(x: 0, y: 50, width: 300, height: 200)
+            imageView.translatesAutoresizingMaskIntoConstraints = true
+            imageView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
+            imageView.autoresizingMask = [UIViewAutoresizing.flexibleLeftMargin, UIViewAutoresizing.flexibleRightMargin, UIViewAutoresizing.flexibleTopMargin, UIViewAutoresizing.flexibleBottomMargin]
+            view.addSubview(imageView)
+
             
-            self.present(newReadingHelpAlert, animated: true)
             
         }
         
@@ -104,7 +111,6 @@ class LibraryTableViewController: UITableViewController {
                 try context.save()
             } catch _ {
             }
-
          }
         return [deleteAction]
     }

@@ -8,6 +8,7 @@
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,7 +36,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_gradient" translatesAutoresizingMaskIntoConstraints="NO" id="JvT-zI-x6C">
-                                <rect key="frame" x="-10" y="0.0" width="385" height="667"/>
+                                <rect key="frame" x="-10" y="0.0" width="385" height="710"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GqQ-BJ-Tmd">
                                 <rect key="frame" x="134" y="388" width="97" height="35"/>
@@ -84,7 +85,7 @@
                             <constraint firstItem="SfO-ch-w9G" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="EG2-oM-jVf"/>
                             <constraint firstItem="Bxw-8L-DIF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="Kp3-2X-xBr"/>
                             <constraint firstItem="GqQ-BJ-Tmd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="134" id="Lwd-Au-80Y"/>
-                            <constraint firstItem="JvT-zI-x6C" firstAttribute="bottom" secondItem="SfO-ch-w9G" secondAttribute="bottom" id="OKH-gj-CuW"/>
+                            <constraint firstItem="JvT-zI-x6C" firstAttribute="bottom" secondItem="SfO-ch-w9G" secondAttribute="bottom" constant="43" id="OKH-gj-CuW"/>
                             <constraint firstAttribute="trailing" secondItem="JvT-zI-x6C" secondAttribute="trailing" id="P7L-Hb-KnH"/>
                             <constraint firstItem="GqQ-BJ-Tmd" firstAttribute="top" secondItem="Bxw-8L-DIF" secondAttribute="bottom" constant="45" id="RCy-Kq-CDS"/>
                             <constraint firstItem="b76-5o-rOZ" firstAttribute="top" secondItem="GqQ-BJ-Tmd" secondAttribute="top" id="hag-bE-w5q"/>
@@ -105,7 +106,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-628" y="812.74362818590714"/>
+            <point key="canvasLocation" x="-629.60000000000002" y="811.84407796101959"/>
         </scene>
         <!--Timer View Controller-->
         <scene sceneID="dza-XT-0s0">
@@ -247,28 +248,21 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" smartInsertDeleteType="no"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="# of pages" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FVa-l4-bsM">
-                                <rect key="frame" x="31" y="177" width="308" height="31"/>
+                                <rect key="frame" x="31" y="177" width="308" height="33"/>
                                 <color key="backgroundColor" red="0.2801628411" green="0.59666627650000004" blue="0.6147148013" alpha="0.1787522007" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="FVa-l4-bsM" secondAttribute="height" multiplier="308:31" id="5kg-yK-Ibb"/>
-                                </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="alert" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="today's date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k3v-ap-Rtz">
-                                <rect key="frame" x="31" y="250" width="308" height="31"/>
+                                <rect key="frame" x="31" y="252" width="308" height="31"/>
                                 <color key="backgroundColor" red="0.2801628411" green="0.59666627650000004" blue="0.6147148013" alpha="0.1787522007" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="k3v-ap-Rtz" secondAttribute="height" multiplier="308:31" id="Z1A-XT-zPb"/>
-                                    <constraint firstAttribute="height" constant="31" id="zZ4-Sq-7bA"/>
-                                </constraints>
                                 <color key="textColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- calculate -" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHd-cT-MRp">
-                                <rect key="frame" x="90" y="308" width="196" height="30"/>
+                                <rect key="frame" x="90" y="310" width="196" height="28"/>
                                 <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="25"/>
                                 <color key="textColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <nil key="highlightedColor"/>
@@ -341,6 +335,7 @@
                             <constraint firstItem="d18-WJ-FqI" firstAttribute="leading" secondItem="jv9-Gr-GLe" secondAttribute="leading" id="81Y-jv-FiP"/>
                             <constraint firstItem="76E-Dz-TEU" firstAttribute="centerX" secondItem="Y2D-fb-1aI" secondAttribute="centerX" id="8Ps-pB-oKx"/>
                             <constraint firstItem="d18-WJ-FqI" firstAttribute="centerY" secondItem="m8c-wt-04e" secondAttribute="centerY" id="9Ub-oU-OHo"/>
+                            <constraint firstItem="bYQ-rC-byj" firstAttribute="leading" secondItem="Fqa-02-icA" secondAttribute="leading" constant="31" id="AeH-YU-EFF"/>
                             <constraint firstItem="bcb-Dv-Yvx" firstAttribute="top" secondItem="Fqa-02-icA" secondAttribute="top" id="ApY-VX-vt7"/>
                             <constraint firstItem="d18-WJ-FqI" firstAttribute="top" secondItem="76E-Dz-TEU" secondAttribute="bottom" constant="21" id="Bai-r7-n0e"/>
                             <constraint firstItem="k3v-ap-Rtz" firstAttribute="top" secondItem="FVa-l4-bsM" secondAttribute="bottom" constant="42" id="BpE-kS-kiw"/>
@@ -349,6 +344,7 @@
                             <constraint firstItem="Fqa-02-icA" firstAttribute="trailing" secondItem="d18-WJ-FqI" secondAttribute="trailing" constant="16" id="Hih-CF-VR8"/>
                             <constraint firstItem="d18-WJ-FqI" firstAttribute="trailing" secondItem="T49-Di-uRf" secondAttribute="trailing" constant="20" id="KaG-sd-fGD"/>
                             <constraint firstItem="jzI-Md-TZ1" firstAttribute="leading" secondItem="Fqa-02-icA" secondAttribute="leading" constant="5" id="Kfy-1x-8CB"/>
+                            <constraint firstItem="Fqa-02-icA" firstAttribute="bottom" secondItem="bYQ-rC-byj" secondAttribute="bottom" constant="98" id="MGW-Yw-c2F"/>
                             <constraint firstItem="0Jf-qG-jGk" firstAttribute="top" secondItem="d18-WJ-FqI" secondAttribute="bottom" constant="38" id="O4E-sN-XKG"/>
                             <constraint firstItem="0Jf-qG-jGk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Y2D-fb-1aI" secondAttribute="leading" constant="20" symbolic="YES" id="OZ7-tV-qMI"/>
                             <constraint firstAttribute="bottom" secondItem="bcb-Dv-Yvx" secondAttribute="bottom" constant="-14" id="OlG-bo-Pls"/>
@@ -359,6 +355,7 @@
                             <constraint firstItem="d18-WJ-FqI" firstAttribute="centerY" secondItem="jzI-Md-TZ1" secondAttribute="centerY" id="Wbg-fA-YKd"/>
                             <constraint firstItem="bYQ-rC-byj" firstAttribute="top" secondItem="jzI-Md-TZ1" secondAttribute="bottom" constant="44" id="YBe-VE-Uzw"/>
                             <constraint firstItem="k3v-ap-Rtz" firstAttribute="leading" secondItem="FVa-l4-bsM" secondAttribute="leading" id="YGA-hs-OtV"/>
+                            <constraint firstItem="k3v-ap-Rtz" firstAttribute="height" secondItem="Y2D-fb-1aI" secondAttribute="height" multiplier="31/667" id="c2u-Ts-krL"/>
                             <constraint firstItem="OHd-cT-MRp" firstAttribute="top" secondItem="k3v-ap-Rtz" secondAttribute="bottom" constant="27" id="cDb-ch-wBB"/>
                             <constraint firstAttribute="bottom" secondItem="d18-WJ-FqI" secondAttribute="bottom" constant="166" id="crD-ns-ORg"/>
                             <constraint firstItem="k3v-ap-Rtz" firstAttribute="leading" secondItem="Fqa-02-icA" secondAttribute="leading" constant="31" id="eDx-dO-Iyq"/>
@@ -368,8 +365,10 @@
                             <constraint firstItem="jzI-Md-TZ1" firstAttribute="centerX" secondItem="Vsi-k5-DQA" secondAttribute="centerX" constant="12.5" id="keJ-Gg-wa7"/>
                             <constraint firstItem="jzI-Md-TZ1" firstAttribute="top" secondItem="0v9-Vu-LHv" secondAttribute="bottom" constant="71" id="kxZ-FI-P28"/>
                             <constraint firstItem="d18-WJ-FqI" firstAttribute="trailing" secondItem="jv9-Gr-GLe" secondAttribute="trailing" id="noa-J7-b2H"/>
+                            <constraint firstItem="jzI-Md-TZ1" firstAttribute="height" secondItem="Y2D-fb-1aI" secondAttribute="height" multiplier="31/667" id="p2x-dW-Xoj"/>
                             <constraint firstItem="jv9-Gr-GLe" firstAttribute="top" secondItem="0v9-Vu-LHv" secondAttribute="top" id="pbq-He-ej2"/>
                             <constraint firstItem="k3v-ap-Rtz" firstAttribute="leading" secondItem="T49-Di-uRf" secondAttribute="leading" id="ppz-Jf-5Ye"/>
+                            <constraint firstItem="FVa-l4-bsM" firstAttribute="height" secondItem="Y2D-fb-1aI" secondAttribute="height" multiplier="33/667" id="pqz-h1-GR0"/>
                             <constraint firstItem="jv9-Gr-GLe" firstAttribute="baseline" secondItem="Vsi-k5-DQA" secondAttribute="baseline" id="rYh-sc-V7l"/>
                             <constraint firstItem="d18-WJ-FqI" firstAttribute="trailing" secondItem="k3v-ap-Rtz" secondAttribute="trailing" constant="20" id="rhR-S1-Vsw"/>
                             <constraint firstItem="T49-Di-uRf" firstAttribute="top" secondItem="Fqa-02-icA" secondAttribute="top" constant="78" id="sTX-eg-ZIE"/>
